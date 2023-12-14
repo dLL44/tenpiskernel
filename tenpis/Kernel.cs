@@ -131,10 +131,23 @@ namespace tenpis
                     break;
                 case "exit":
                 case "shutdown":
-                    Console.WriteLine("leaving tenpis kernel");
-                    Console.WriteLine("bye!");
-                    Sleep(2000);
-                    Cosmos.System.Power.Shutdown();
+                    Console.WriteLine("Are you sure? The file system isn't fully developed, and you will lose data. [y/n] ");
+                    string ans = Console.ReadLine().ToLower();
+                    if (ans != "y" && ans != "n")
+                    {
+                        Console.WriteLine("Only 'y' or 'n' allowed.");
+                    }
+                    else if (ans == "n")
+                    {
+                        Console.WriteLine("Ok.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Sadly shutting down...");
+                        Sleep(2000);
+                        Cosmos.System.Power.Shutdown();
+                    }
+                    break;
                     break;
                 case "lgin":
                     Login();
@@ -219,21 +232,8 @@ namespace tenpis
 
         private void BadCommand()
         {
-           
             Console.WriteLine("i have no fucking idea what your talking about.");
-            wrongCommandCount++;
-            if (wrongCommandCount == 10)
-            {
-                Console.WriteLine("you said something completely unkown for 10 times, check your typing");
-            }
-            else  if(wrongCommandCount > 10){
-                Console.WriteLine($"This kernel cant understand your bullshit, you are now at {wrongCommandCount} times.");
-            } else if(wrongCommandCount > 100) { 
-                Console.WriteLine("I had enough, im boot you out of this kernel");
-                extKernel();
-            } 
-        }
-        
+        } 
 
         private void extKernel()
         {
